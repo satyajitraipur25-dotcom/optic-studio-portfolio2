@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optic Studio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0b0b0b;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #FFD000;
+        }
+
+        .logo img {
+            height: 45px;
+        }
+
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #FFD000;
+        }
+
+        /* HERO */
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 10%;
+            perspective: 1000px;
+        }
+
+        .hero h1 {
+            font-size: 65px;
+            margin-bottom: 20px;
+        }
+
+        .hero span {
+            color: #FFD000;
+        }
+
+        .hero p {
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 30px;
+            background: #FFD000;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.4s;
+            box-shadow: 0 0 15px #FFD000;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 25px #FFD000;
+        }
+
+        /* FLOATING ANIMATION */
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px)
+            }
+
+            50% {
+                transform: translateY(-20px)
+            }
+
+            100% {
+                transform: translateY(0px)
+            }
+        }
+
+        .hero-content {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* PORTFOLIO */
+
+        .portfolio {
+            padding: 120px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #FFD000;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        /* 3D CARD */
+
+        .card {
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card:hover {
+            transform: rotateY(10deg) rotateX(10deg) scale(1.05);
+            box-shadow: 0 25px 40px rgba(255, 208, 0, 0.3);
+        }
+
+        /* PRICING */
+
+        .pricing {
+            padding: 120px 8%;
+            background: #111;
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+        }
+
+        .price-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: 0.4s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(255, 208, 0, 0.4);
+        }
+
+        .price {
+            font-size: 50px;
+            color: #FFD000;
+            margin: 20px 0;
+        }
+
+        /* CTA */
+
+        .cta {
+            padding: 120px 8%;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: black;
+            opacity: 0.7;
+        }
+
+        .whatsapp-btn {
+
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+
+        }
+
+        .whatsapp-btn:hover {
+
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+
+        }
+
+        .whatsapp-float {
+
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            z-index: 999;
+
+        }
+
+        .whatsapp-float:hover {
+
+            transform: scale(1.15);
+
+        }
+
+        .privacy,
+        .location {
+
+            padding: 80px 10%;
+            background: #0f0f0f;
+            text-align: center;
+
+        }
+
+        .privacy p,
+        .location p {
+
+            max-width: 700px;
+            margin: 15px auto;
+            opacity: 0.8;
+            line-height: 1.6;
+
+        }
+
+        .testimonials,
+        .faq,
+        .terms {
+
+            padding: 80px 10%;
+            background: #111;
+            text-align: center;
+
+        }
+
+        .testimonial-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+
+        }
+
+        .testimonial-card {
+
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            transition: 0.3s;
+
+        }
+
+        .testimonial-card:hover {
+
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 208, 0, 0.3);
+
+        }
+
+        .faq-item {
+
+            max-width: 700px;
+            margin: 25px auto;
+
+        }
+
+        .faq-item h3 {
+
+            color: #FFD000;
+
+        }
+
+        .terms p {
+
+            max-width: 700px;
+            margin: 15px auto;
+            line-height: 1.6;
+
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        .lightbox{
+
+display:none;
+position:fixed;
+z-index:1000;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+align-items:center;
+justify-content:center;
+
+}
+
+.lightbox-content{
+
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+
+}
+
+.close{
+
+position:absolute;
+top:30px;
+right:40px;
+font-size:40px;
+color:white;
+cursor:pointer;
+
+}
+    </style>
+</head>
+<a href="https://wa.me/918250472398" target="_blank" class="whatsapp-float">
+    💬
+</a>
+<div id="lightbox" class="lightbox">
+
+    <span class="close">&times;</span>
+
+    <img class="lightbox-content" id="lightbox-img">
+
+</div>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+
+            <img src="logo.jpeg" alt="Optics Studio">
+
+            <span>OPTICS STUDIO</span>
+
+        </div>
+        <script src="b.js"></script>
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+    </nav>
+
+
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <h1>High CTR <span>YouTube Thumbnails</span></h1>
+
+            <p>Professional thumbnails that increase clicks and views.</p>
+
+            <button class="btn">
+                <a href="#portfolio" class="btn">View Portfolio</a>
+            </button>
+            <button class="btn">
+                <a href="https://wa.me/918250472398?text=Hi%20Optic%20Studio,%20I%20want%20to%20hire%20you%20for%20YouTube%20thumbnail%20design."
+                    target="_blank" class="btn">
+                    Hire Me
+                </a></button>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="portfolio" id="portfolio">
+
+        <h2 class="section-title">My Work</h2>
+
+        <div class="grid">
+
+            <section class="portfolio" id="portfolio">
+
+                <div class="grid">
+
+                    <div class="grid">
+
+                        <div class="card">
+                            <img src="chemical equilibrium.jpeg" class="portfolio-img">
+                        </div>
+
+                        <div class="card">
+                            <img src="cholotorit.jpeg" class="portfolio-img">
+                        </div>
+
+                        <div class="card">
+                            <img src="hy.jpeg" class="portfolio-img">
+                        </div>
+
+                        <div class="card">
+                            <img src="iisert.jpeg" class="portfolio-img">
+                        </div>
+
+                        <div class="card">
+                            <img src="iso.jpeg" class="portfolio-img">
+                        </div>
+
+                        <div class="card">
+                            <img src="mn.jpeg" class="portfolio-img">
+                        </div>
+
+                        <div class="card">
+                            <img src="mpq.jpeg" class="portfolio-img">
+                        </div>
+
+                        <div class="card">
+                            <img src="nitrogen.jpeg" class="portfolio-img">
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+    </section>
+
+
+
+    <section class="pricing" id="pricing">
+
+        <h2 class="section-title">Pricing</h2>
+
+        <div class="price-grid">
+
+            <div class="price-card">
+                <h3>Single Thumbnail</h3>
+                <div class="price">₹79</div>
+                <p>High CTR Design</p>
+                <button class="btn">
+                    <a href="https://wa.me/918250472398?text=Hi%20Optic%20Studio,%20I%20want%20to%20order%201%20thumbnail%20for%20₹79."
+                        target="_blank" class="btn">
+                        Order Now
+                    </a>
+                </button>
+            </div>
+
+            <div class="price-card">
+                <h3>10 Thumbnails</h3>
+                <div class="price">₹699</div>
+                <p>Bulk Discount</p>
+                <button class="btn">
+                    <a href="https://wa.me/918250472398?text=Hi%20Optic%20Studio,%20I%20want%20to%20order%2010%20thumbnails%20for%20₹699."
+                        target="_blank" class="btn">
+                        Order Now
+                    </a>
+                </button>
+            </div>
+
+            <div class="price-card">
+                <h3>15 Thumbnails</h3>
+                <div class="price">₹999</div>
+                <p>Best Value</p>
+                <button class="btn">
+                    <a href="https://wa.me/918250472398?text=Hi%20Optic%20Studio,%20I%20want%20to%20order%2015%20thumbnails%20for%20₹999."
+                        target="_blank" class="btn">
+                        Order Now
+                    </a>
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="cta" id="contact">
+
+        <h2>Grow Your YouTube Channel</h2>
+        <p>Get high converting thumbnails from Optic Studio</p>
+
+        <button class="btn">
+            <div class="whatsapp-contact">
+
+                <h3>Contact Optic Studio</h3>
+
+                <p>Order your YouTube thumbnails directly on WhatsApp.</p>
+
+                <a href="https://wa.me/918250472398" target="_blank" class="whatsapp-btn">
+                    Chat on WhatsApp
+                </a>
+
+            </div>
+        </button>
+
+
+    </section>
+
+    <section id="location" class="location">
+
+        <h2 class="section-title">Our Location</h2>
+
+        <p>Optic Studio – Thumbnail Design Service</p>
+
+        <p>BANKURA, West Bengal, India</p>
+
+        <p>WhatsApp: +91 8250472398</p>
+
+        <a href="https://wa.me/918250472398" target="_blank" class="btn">
+            Contact on WhatsApp
+        </a>
+
+    </section>
+    <section id="testimonials" class="testimonials">
+
+        <h2 class="section-title">Client Testimonials</h2>
+
+        <div class="testimonial-grid">
+
+            <div class="testimonial-card">
+                <p>"Amazing thumbnails! My YouTube CTR increased after using Optic Studio."</p>
+                <h4>– YouTube Creator</h4>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"Very fast delivery and professional design. Highly recommended."</p>
+                <h4>– Content Creator</h4>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"Best thumbnail designer I worked with. Great communication."</p>
+                <h4>– Gaming Channel</h4>
+            </div>
+
+        </div>
+
+    </section>
+    <section id="faq" class="faq">
+
+        <h2 class="section-title">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <h3>How do I order thumbnails?</h3>
+            <p>You can order directly by clicking the "Order Now" button and contacting us on WhatsApp.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What is the delivery time?</h3>
+            <p>Most thumbnails are delivered within 24 hours depending on the package.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Do you offer bulk discounts?</h3>
+            <p>Yes! We offer packages for 10 thumbnails (₹699) and 15 thumbnails (₹999).</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can I request revisions?</h3>
+            <p>Yes, minor revisions are included to make sure you are satisfied.</p>
+        </div>
+
+    </section>
+    <section id="terms" class="terms">
+
+        <h2 class="section-title">Terms & Conditions</h2>
+
+        <p>
+            By ordering thumbnail design services from <strong>Optic Studio</strong>, you agree to the following terms.
+        </p>
+
+        <p>
+            1. Payment must be completed before final delivery of thumbnails.
+        </p>
+
+        <p>
+            2. The client must provide all required information such as title, images, and concept.
+        </p>
+
+        <p>
+            3. Optic Studio reserves the right to showcase completed designs in its portfolio.
+        </p>
+
+        <p>
+            4. Delivery time may vary depending on order quantity and workload.
+        </p>
+
+        <p>
+            5. Refunds are not provided once the design process has started.
+        </p>
+
+    </section>
+
+
+    <footer>
+
+        <p>© 2026 Optic Studio</p>
+        <section id="privacy" class="privacy">
+
+            <h2 class="section-title">Privacy Policy</h2>
+
+            <p>
+                At <strong>Optic Studio</strong>, we respect your privacy. Any information shared by clients such as
+                name, contact number, or project details is used only for communication and delivering our thumbnail
+                design services.
+            </p>
+
+            <p>
+                We do not share, sell, or distribute client information to third parties. All conversations and project
+                files remain confidential.
+            </p>
+
+            <p>
+                If you contact us through WhatsApp or other platforms, your information will only be used to respond to
+                your inquiry and complete your order.
+            </p>
+
+        </section>
+
+    </footer>
+
+</body>
+
+</html>
